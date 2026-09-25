@@ -1,11 +1,14 @@
 from sqlalchemy.orm import Session
 from app import models,schemas
 
-def create_document(db: Session, payload: schemas.DocumentCreate) -> models.Document:
+def create_document(db: Session, payload: schemas.DocumentCreate, commit: bool = True) -> models.Document:
+    """commit=False 时只 flush：能拿到自增 id，但不落盘，交给调用方决定何时提交。"""
     doc=models.Document(title=payload.title, content=payload.content)
     db.add(doc)
-    db.commit()
-    db.refresh(doc)
+    db.flush()          # 先拿到 doc.id，供建索引用
+    if commit:
+        db.commit()
+        db.refresh(doc)
     return doc
 
 
