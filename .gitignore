@@ -1,6 +1,30 @@
+# ===== 环境与依赖 =====
 .venv/
 __pycache__/
-*.db
+*.py[cod]
+*.egg-info/
+
+# ===== 机密：.env 里有 OPENAI_API_KEY，绝不能入库 =====
 .env
+.env.*
+
+# ===== 运行时数据（SQLite + 向量库） =====
+*.db
 *.db-shm
 *.db-wal
+chroma_db/
+
+# ===== 测试与缓存 =====
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# ===== 编辑器/系统 =====
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
